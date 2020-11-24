@@ -88,29 +88,53 @@ $(document).ready(function () {
 
     function arrayHunt() {
         var myArray = getSelectedArray();
+        var dir = $("#imageSet").val()
 
         /*
         Find the first and last string in the array.
         Output them to td#firstLast
          */
-
+            $("td#firstLast").append(createImage(dir,myArray[0]));
+            $("td#firstLast").append(createImage(dir, myArray[myArray.length - 1]));
 
         /*
         Find the first string that contains an 'n'.
         Output it to td#firstEnn
          */
+        var containsFlag = false;
+        for ( var i = 0; i < myArray.length; i++ ) {
+            if (containsFlag === false ) {
+                if (myArray[i].includes("n")) {
+                    $("td#firstEnn").append(createImage(dir, myArray[i] ));
+                    containsFlag = true;
+                }
+            }
+        }
 
 
         /*
         Find all of the strings with less than 6 characters.
         Output them to td#lessThanSix
          */
+        for ( var ii = 0; ii < myArray.length; ii++ ) {
+            if (myArray[ii].length < 6) {
+                $("td#lessThanSix").append(createImage(dir, myArray[ii] ));
+               
+            }
+        }
 
 
         /*
         Find the longest string in the array.
         Output it to td#longName
          */
+        var biggest = myArray[0];
+        for ( var iii = 0; iii < myArray.length; iii++ ) {
+            if (myArray[iii].length > biggest.length) {
+                biggest = myArray[iii];
+            }
+        }
+        $("td#longName").append(createImage(dir, biggest ));
 
 
         /*
@@ -118,18 +142,41 @@ $(document).ready(function () {
         Output them to td#noEss
          */
 
+        for ( var iiii = 0; iiii < myArray.length; iiii++ ) {
+            if (!myArray[iiii].includes("s")) {
+                $("td#noEss").append(createImage(dir, myArray[iiii] ));
+
+            } else {
+
+            }
+        }
 
         /*
         Output all of the strings, but with all of their vowels
         in uppercase, to td#upperVowels
          */
-
-
+        var text = '';
+        for ( var j = 0; j < myArray.length; j++ ) {
+            var word = myArray[j];
+            var newWord = '';
+            for ( var k = 0; k < word.length; k++ ) {
+                var ch = word[k];
+                console.log(ch);
+                if ( ch === 'a' || ch === 'e' || ch === 'i' || ch === 'o' || ch === 'u') {
+                    newWord += word[k].toUpperCase();
+                } else {
+                    newWord += ch;
+                }
+                
+            }
+            text += (newWord + ' ')
+        }
+        $("td#upperVowels").text(text);
         /*
         Output all of the strings in reverse order and separated by
         ' - ' to td#reverseDash
          */
-
+        $("td#reverseDash").text(myArray.reverse().join('-'));
 
     }
 
